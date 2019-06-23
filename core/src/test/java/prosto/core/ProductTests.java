@@ -109,9 +109,9 @@ public class ProductTests {
         t3.product();
 
         Column c31 = s.createColumn("C31", t3, t1);
-        c31.noop(true); // First key (2 records)
+        c31.attribute(true); // First key (2 records)
         Column c32 = s.createColumn("C32", t3, t2);
-        c32.noop(true); // Second key (3 records)
+        c32.attribute(true); // Second key (3 records)
 
         return s;
     }

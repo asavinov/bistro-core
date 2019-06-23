@@ -11,15 +11,15 @@ public class OpProject extends OpLink {
 
     void validate() {
 
-        // Output table must be product-table (cannot be noop-table). It could be a warning because it does not prevent from evaluating/populating.
-        if(this.column.getOutput().getOperationType() == OperationType.NOOP) {
+        // Output table must be product-table (cannot be attribute-table). It could be a warning because it does not prevent from evaluating/populating.
+        if(this.column.getOutput().getOperationType() == OperationType.ATTRIBUTE) {
             throw( new ProstoException(ProstoErrorCode.DEFINITION_ERROR, "Column operation error.", "Proj-column must have product-table as type. Change to either link-column or product-table.") );
         }
 
         // Check that all specified keys are really key columns of the type table
         Column nonKeyColumn = null;
         for(Column col : this.keyColumns) {
-            if(!col.isKey()) {
+            if(!col.isAttribute()) {
                 nonKeyColumn = col;
                 break;
             }
@@ -34,7 +34,7 @@ public class OpProject extends OpLink {
 
         // Use all existing keys by default if not specified
         if(keyColumns == null || keyColumns.length == 0) {
-            this.keyColumns = column.getOutput().getKeyColumns();
+            this.keyColumns = column.getOutput().getAttributes();
         }
 
         this.isProj = true;
@@ -46,7 +46,7 @@ public class OpProject extends OpLink {
 
         // Use all existing keys by default if not specified
         if(keyColumns == null || keyColumns.length == 0) {
-            this.keyColumns = column.getOutput().getKeyColumns();
+            this.keyColumns = column.getOutput().getAttributes();
         }
 
         this.isProj = true;

@@ -10,9 +10,8 @@ public enum OperationType {
     // Column operations
     //
 
-    // No operation column
-    // These columns are not overwritten automatically during evaluation. They are set and reset only via API and then retain their output during inference.
-    NOOP(0),
+    // Attribute column
+    ATTRIBUTE(0),
 
     // Calculate column
     CALCULATE(10),
@@ -54,7 +53,7 @@ public enum OperationType {
                 return kind;
             }
         }
-        return OperationType.NOOP;
+        return OperationType.ATTRIBUTE;
     }
 
     private OperationType(int value) {

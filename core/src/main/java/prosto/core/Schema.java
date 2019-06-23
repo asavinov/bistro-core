@@ -109,8 +109,22 @@ public class Schema {
         this.columns.add(col);
         return col;
     }
+
     public void deleteColumn(Column col) {
         this.columns.remove(col);
+    }
+
+    //
+    // Operation columns
+    //
+
+    public Column createAttribute(String name, String input) {
+        return this.createAttribute(name, input, null);
+    }
+    public Column createAttribute(String name, String input, String output) {
+        Column col = this.createColumn(name, input, null);
+        col.attribute(true);
+        return col;
     }
 
     //

@@ -24,7 +24,7 @@ public class OpProduct implements Operation {
         List<Element> ret = new ArrayList<>();
 
         // Key-column types have to be populated - we need them to build all their combinations
-        List<Column> keyCols = this.table.getKeyColumns();
+        List<Column> keyCols = this.table.getAttributes();
         keyCols = keyCols.stream().filter(x -> !x.getOutput().isPrimitive()).collect(Collectors.toList()); // Skip all primitive keys
         List<Table> keyTypes = keyCols.stream().map(x -> x.getOutput()).collect(Collectors.toList());
         ret.addAll(keyTypes);
@@ -53,7 +53,7 @@ public class OpProduct implements Operation {
     public void evaluate() {
 
         // Find all local greater dimensions to be varied (including the super-dim)
-        List<Column> keyColumns = this.table.getKeyColumns();
+        List<Column> keyColumns = this.table.getAttributes();
         int colCount = keyColumns.size(); // Dimensionality - how many free dimensions
 
         // Initialize population

@@ -167,7 +167,7 @@ public class OpRange implements Operation {
 
         // At least one numeric column is needed to store the range values
         if(this.rangeColumn == null) {
-            throw( new ProstoException(ProstoErrorCode.DEFINITION_ERROR, "Table operation error.", "A range table must have at least one noop column for storing range values.")) ;
+            throw( new ProstoException(ProstoErrorCode.DEFINITION_ERROR, "Table operation error.", "A range table must have at least one attribute column for storing range values.")) ;
         }
 
         // This columns must be primitive one
@@ -175,9 +175,9 @@ public class OpRange implements Operation {
             throw( new ProstoException(ProstoErrorCode.DEFINITION_ERROR, "Table operation error.", "A column for storing range values must be a primitive column.")) ;
         }
 
-        // This column has to be noop
-        if(this.rangeColumn.getOperationType() != OperationType.NOOP) {
-            throw( new ProstoException(ProstoErrorCode.DEFINITION_ERROR, "Table operation error.", "A column for storing range values must be NOOP column.")) ;
+        // This column has to be attribute
+        if(this.rangeColumn.getOperationType() != OperationType.ATTRIBUTE) {
+            throw( new ProstoException(ProstoErrorCode.DEFINITION_ERROR, "Table operation error.", "A column for storing range values must be ATTRIBUTE column.")) ;
         }
     }
 

@@ -29,7 +29,7 @@ public class AccumulateTests {
         Table t = schema.createTable("T");
 
         Column tid = schema.createColumn("Id", t);
-        tid.noop(true);
+        tid.attribute(true);
 
         // Define accumulate column
         Column ta = schema.createColumn("A", t);

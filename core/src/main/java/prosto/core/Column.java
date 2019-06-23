@@ -68,8 +68,8 @@ public class Column implements Element {
     public List<Element> getDependencies() {
         List<Element> deps = new ArrayList<>();
 
-        if(this.getOperationType() == OperationType.NOOP) {
-            if(this.isKey() && this.getInput().getOperationType() == OperationType.PRODUCT) {
+        if(this.getOperationType() == OperationType.ATTRIBUTE) {
+            if(this.isAttribute() && this.getInput().getOperationType() == OperationType.PRODUCT) {
                 deps.add(this.getInput()); // Key-columns depend on the product-table (if any) because they are filled by their population procedure
             }
         }
@@ -216,22 +216,20 @@ public class Column implements Element {
 
         this.operation = operation;
 
-        this.key = false;
-
         if(this.hasDependency(this)) {
-            this.noop(false); // Reset definition because of failure to set new operation
+            this.attribute(false); // Reset definition because of failure to set new operation
             throw new ProstoException(ProstoErrorCode.DEFINITION_ERROR, "Cyclic dependency.", "This column depends on itself directly or indirectly.");
         }
     }
 
     @Override
     public OperationType getOperationType() {
-        if(this.operation == null) return OperationType.NOOP;
+        if(this.operation == null) return OperationType.ATTRIBUTE;
         else return this.operation.getOperationType();
     }
 
     public boolean isDerived() {
-        if(this.getOperationType() == OperationType.NOOP) {
+        if(this.getOperationType() == OperationType.ATTRIBUTE) {
             return false;
         }
         return true;
@@ -243,22 +241,18 @@ public class Column implements Element {
     }
 
     //
-    // Noop column
+    // Attributes
     //
 
-    // If true, its outputs will be set by the table population procedure during inference for each new instance
-    // It is actually part of the noop-column operation (only noop-columns can be keys)
-    private boolean key = false;
-    public boolean isKey() {
-        return this.key;
+    public boolean isAttribute() {
+        return this.getOperationType() == OperationType.ATTRIBUTE;
     }
 
-    public void noop(boolean isKey) {
-        Operation op = null;
+    public void attribute(boolean isAttribute) {
+        Operation op = new OpAttribute(this);
         this.setOperation(op);
 
-        this.key = isKey; // TODO: We need to validate the topology (dependencies) after such change
-
+        // TODO: We need to validate the topology (dependencies) after such change
         // TODO: Should we reset the data?
     }
 

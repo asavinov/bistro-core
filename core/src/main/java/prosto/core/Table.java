@@ -67,7 +67,7 @@ public class Table implements Element {
     public List<Element> getDependencies() {
         List<Element> deps = new ArrayList<>();
 
-        if(this.getOperationType() == OperationType.NOOP) {
+        if(this.getOperationType() == OperationType.ATTRIBUTE) {
             return deps;
         }
 
@@ -161,7 +161,7 @@ public class Table implements Element {
             return;
         }
 
-        if(this.getOperationType() == OperationType.NOOP) {
+        if(this.getOperationType() == OperationType.ATTRIBUTE) {
             return;
         }
 
@@ -230,12 +230,12 @@ public class Table implements Element {
 
     @Override
     public OperationType getOperationType() {
-        if(this.operation == null) return OperationType.NOOP;
+        if(this.operation == null) return OperationType.ATTRIBUTE;
         else return this.operation.getOperationType();
     }
 
     public boolean isDerived() {
-        if(this.getOperationType() == OperationType.NOOP) {
+        if(this.getOperationType() == OperationType.ATTRIBUTE) {
             return false;
         }
         return true;
@@ -289,10 +289,10 @@ public class Table implements Element {
     // Convenience methods
     //
 
-    public List<Column> getKeyColumns() { // Get all columns the domains of which have to be combined (non-primitive key-columns)
+    public List<Column> getAttributes() { // Get all columns the domains of which have to be combined (non-primitive key-columns)
         List<Column> ret = new ArrayList<>();
         for(Column col : this.getColumns()) {
-            if(!col.isKey()) continue; // Skip non-key columns
+            if(!col.isAttribute()) continue; // Skip non-key columns
             ret.add(col);
         }
         return ret;
