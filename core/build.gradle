@@ -1,0 +1,216 @@
+buildscript {
+    repositories {
+        flatDir {
+            dirs "$rootProject.projectDir"
+        }
+        mavenLocal()
+        mavenCentral()
+        jcenter()
+	}
+    dependencies {
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'maven-publish'
+apply plugin: 'signing'
+
+description 'General-purpose data analysis engine radically changing the way batch and stream data is processed'
+
+group = 'prosto'
+archivesBaseName = 'prosto-core'
+version = '0.1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    jcenter()
+}
+
+dependencies {
+    testCompile("junit:junit:4.12")
+
+    //compile("org.slf4j:slf4j-api:1.7.26")
+    //compile("org.slf4j:slf4j-simple:1.7.26")
+
+    //compile("ch.qos.logback:logback-core:1.2.3")
+    //compile("ch.qos.logback:logback-classic:1.2.3")
+}
+
+configurations.all {
+    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+}
+
+test {
+    testLogging.showStandardStreams = true // To see print output in unit tests
+}
+
+//
+// Tasks
+//
+
+jar {
+    baseName = 'prosto-core'
+    version =  '0.1.0-SNAPSHOT'
+}
+
+task sourceJar(type: Jar, dependsOn: classes) {
+    classifier 'sources'
+    from sourceSets.main.allJava
+    // from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+    // from javadoc
+}
+javadoc.failOnError = false // Ignore syntactic errors in javadoc html
+
+artifacts {
+    archives jar
+    archives sourceJar
+    archives javadocJar
+}
+
+//
+// Sign. Uncomment this section to sign archives and pom (gradle.properties will be needed with credentials and other parameters)
+//
+/*
+signing {
+    required { !version.endsWith("SNAPSHOT") }
+    sign configurations.archives
+}
+// call signArchives task before publish task
+//task preparePublish(dependsOn: signArchives)
+*/
+
+//
+// Publish into maven repository
+//
+publishing {
+    publications {
+
+        mavenJava(MavenPublication) {
+            from components.java
+
+            // Set the base name of the artifacts
+            //groupId 'prosto'
+            artifactId 'prosto-core'
+            //version '0.1.0-SNAPSHOT'
+
+            // Add POM fields required by Sonatype OSS
+            customizePom(pom, rootProject)
+
+            //artifact jar
+            artifact sourceJar
+            artifact javadocJar
+
+			//
+            // Uncomment this section to sign archives and pom (gradle.properties will be needed with credentials and other parameters)
+			//
+/*
+            // Sign pom and create pom artifact
+            pom.withXml {
+                def pomFile = file("${project.buildDir}/generated-pom.xml")
+                writeTo(pomFile)
+                def pomAscFile = signing.sign(pomFile).signatureFiles[0]
+                artifact(pomAscFile) {
+                    classifier = null
+                    extension = 'pom.asc'
+                }
+            }
+
+            // Create signed artifacts
+            project.tasks.signArchives.signatureFiles.each {
+                artifact(it) {
+                    def matcher = it.file =~ /-(sources|javadoc)\.jar\.asc$/
+                    if (matcher.find()) {
+                        classifier = matcher.group(1)
+                    } else {
+                        classifier = null
+                    }
+                    extension = 'jar.asc'
+                }
+            }
+*/
+
+        }
+
+    }
+    repositories {
+        mavenLocal()
+
+        //
+        // Uncomment to publish in central repository
+        //
+/*
+        maven {
+
+            //url 'https://oss.sonatype.org/content/repositories/snapshots'
+            url 'https://oss.sonatype.org/service/local/staging/deploy/maven2'
+
+            // Download: https://oss.sonatype.org/content/groups/public
+            // Download: https://oss.sonatype.org/content/groups/staging
+
+            credentials {
+                username sonatypeUsername
+                password sonatypePassword
+            }
+        }
+*/
+
+    }
+}
+
+def customizePom(pom, gradleProject) {
+    pom.withXml {
+        def root = asNode()
+
+        // eliminate test-scoped dependencies (no need in maven central POMs)
+        root.dependencies.removeAll { dep ->
+            dep.scope == "test"
+        }
+
+        // add all items necessary for maven central publication
+        root.children().last() + {
+            resolveStrategy = Closure.DELEGATE_FIRST
+
+            name 'Prosto Core'
+            description gradleProject.description
+            url 'https://github.com/prostodata/prosto'
+            organization {
+                name 'Prosto Data'
+                url 'https://github.com/prostodata'
+            }
+            issueManagement {
+                system 'GitHub'
+                url 'https://github.com/prostodata/prosto/issues'
+            }
+            scm {
+                url 'https://github.com/prostodata/prosto'
+                connection 'scm:git:git://github.com/prostodata/prosto.git'
+                developerConnection 'scm:git:ssh:git@github.com/prostodata/prosto.git'
+            }
+            licenses {
+                license {
+                    name 'MIT License'
+                    url 'https://github.com/prostodata/prosto/blob/master/LICENSE'
+                    distribution 'repo'
+                }
+            }
+            developers {
+                developer {
+                    id 'prostodata'
+                    name 'Prosto Data'
+                    email 'prostodata@github.org'
+                }
+            }
+        }
+    }
+}
