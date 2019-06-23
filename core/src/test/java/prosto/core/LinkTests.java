@@ -57,9 +57,9 @@ public class LinkTests {
         t1.product();
 
         Column t1a = s.createColumn("A", t1);
-        t1a.attribute(true);
+        t1a.attribute();
         Column t1b = s.createColumn("B", t1);
-        t1b.attribute(true);
+        t1b.attribute();
 
         // Add one record to link to
         t1.getData().add();
@@ -186,9 +186,9 @@ public class LinkTests {
         Table t = s.createTable("R");
 
         Column t_a = s.createColumn("V", t);
-        t_a.attribute(true);
+        t_a.attribute();
         Column t_i = s.createColumn("I", t);
-        t_i.attribute(true);
+        t_i.attribute();
 
         t.range(
                 10.0, // Origin of the raster
@@ -318,9 +318,9 @@ public class LinkTests {
         Table t = s.createTable("R");
 
         Column t_a = s.createColumn("V", t);
-        t_a.attribute(true);
+        t_a.attribute();
         Column t_i = s.createColumn("I", t);
-        t_i.attribute(true);
+        t_i.attribute();
 
         t.range(
                 Instant.parse("2018-01-01T00:45:00.00Z"),

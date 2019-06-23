@@ -123,7 +123,7 @@ public class Schema {
     }
     public Column createAttribute(String name, String input, String output) {
         Column col = this.createColumn(name, input, null);
-        col.attribute(true);
+        col.attribute();
         return col;
     }
 

@@ -217,7 +217,7 @@ public class Column implements Element {
         this.operation = operation;
 
         if(this.hasDependency(this)) {
-            this.attribute(false); // Reset definition because of failure to set new operation
+            this.operation = null; // Reset definition because of failure to set new operation
             throw new ProstoException(ProstoErrorCode.DEFINITION_ERROR, "Cyclic dependency.", "This column depends on itself directly or indirectly.");
         }
     }
@@ -248,12 +248,9 @@ public class Column implements Element {
         return this.getOperationType() == OperationType.ATTRIBUTE;
     }
 
-    public void attribute(boolean isAttribute) {
+    public void attribute() {
         Operation op = new OpAttribute(this);
         this.setOperation(op);
-
-        // TODO: We need to validate the topology (dependencies) after such change
-        // TODO: Should we reset the data?
     }
 
     //

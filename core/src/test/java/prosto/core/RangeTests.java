@@ -135,10 +135,10 @@ public class RangeTests {
         Table t = s.createTable("R");
 
         Column c11 = s.createColumn("V", t);
-        c11.attribute(true); // Range column
+        c11.attribute(); // Range column
 
         Column c12 = s.createColumn("I", t);
-        c12.attribute(true); // Interval column
+        c12.attribute(); // Interval column
 
         return s;
     }
