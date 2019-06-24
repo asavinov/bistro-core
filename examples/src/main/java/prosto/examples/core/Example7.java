@@ -44,10 +44,10 @@ public class Example7 {
         Table hourlyQuotes = schema.createTable("Hourly Quotes");
 
         Column hourColumn = schema.createColumn("Hour", hourlyQuotes);
-        hourColumn.noop(true);
+        hourColumn.attribute();
 
         Column intervalColumn = schema.createColumn("Interval", hourlyQuotes);
-        intervalColumn.noop(true);
+        intervalColumn.attribute();
 
         hourlyQuotes.range(
                 Instant.parse("2015-12-01T00:00:10.00Z"),
