@@ -1,5 +1,7 @@
 package prosto.core;
 
+import prosto.core.operations.OpCalculate;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -124,6 +126,13 @@ public class Schema {
     public Column createAttribute(String name, String input, String output) {
         Column col = this.createColumn(name, input, null);
         col.attribute();
+        return col;
+    }
+
+    public Column createCalculate(String name, String tableName, String typeName, EvalCalculate lambda, String[] inputs, Object model, String input_length) {
+        Column col = this.createColumn(name, tableName, typeName);
+        Operation op = new OpCalculate(col, lambda, inputs, model, input_length);
+        col.setOperation(op);
         return col;
     }
 

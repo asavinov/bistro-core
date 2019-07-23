@@ -11,6 +11,7 @@ public enum OperationType {
     //
 
     // Attribute column
+    // Its values will be set by the table population procedure
     ATTRIBUTE(0),
 
     // Calculate column

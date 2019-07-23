@@ -1,5 +1,7 @@
 package prosto.core;
 
+import prosto.core.operations.OpCalculate;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +38,12 @@ public class Topology {
             for(Element elem : all) {
 
                 if(done.contains(elem)) continue;
+
+                // Translate individual elements
+                // TODO: It has to be done a separate loop for all elements (currently we have it only for calc-columns)
+                if(elem instanceof Column && elem.getOperationType() == OperationType.CALCULATE) {
+                    ((OpCalculate)elem.getOperation()).translate();
+                }
 
                 boolean isNext = true;
                 for(Element dep : elem.getDependencies()) {

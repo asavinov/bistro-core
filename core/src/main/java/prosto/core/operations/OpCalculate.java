@@ -11,10 +11,19 @@ import prosto.core.*;
  */
 public class OpCalculate implements Operation {
 
+    // Operations are viewed as extensions of this base class
     Column column;
 
-    EvalCalculate lambda;
+    // Definition
+    List<String> inputs = new ArrayList<>();
+    String lambdaName;
+
+    Object model;
+    String input_length = "value";
+
+    // Operation
     List<ColumnPath> parameterPaths = new ArrayList<>();
+    EvalCalculate lambda;
 
     @Override
     public OperationType getOperationType() {
@@ -103,6 +112,36 @@ public class OpCalculate implements Operation {
             this.column.getData().setValue(i, result);
         }
 
+    }
+
+    // Prepare the definition to execution (convert definition to executable operation)
+    public void translate() {
+        Schema schema = this.column.getSchema();
+
+        // TODO: We use it only because there are two creation approaches: by name and by object
+        if(!this.parameterPaths.isEmpty()) {
+            return;
+        }
+
+        // Resolve all input names
+        this.parameterPaths = new ArrayList<>();
+        for(String name : this.inputs) {
+            // TODO: input names could be complex columns so we need to
+            // - add auxiliary operations for merge columns by breaking input column into segments
+            // - resolve only the result merge column and add it to input list (rather than the complex input which will be used in the merge column definition)
+            // Important: during translation phase, we need to have access to the list of all operations so that we can add additional operations.
+            //   Currently, it can be the schema itself (so we cannot distinguish user and auxiliary operations) but later we can separate them.
+            //   Alternatively, it can be the topology but then the translation method need to have access to it
+
+            Column col = schema.getColumn(this.column.getInput().getName(), name);
+            this.parameterPaths.add(new ColumnPath(col));
+        }
+    }
+
+    public OpCalculate(Column column, EvalCalculate lambda, String[] inputs, Object model, String input_length) {
+        this.column = column;
+        this.lambda = lambda;
+        this.inputs = Arrays.asList(inputs);
     }
 
     public OpCalculate(Column column, EvalCalculate lambda, ColumnPath[] paths) {
