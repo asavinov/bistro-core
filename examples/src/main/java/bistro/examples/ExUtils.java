@@ -1,6 +1,6 @@
-package prosto.examples;
+package bistro.examples;
 
-import prosto.core.*;
+import bistro.core.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;

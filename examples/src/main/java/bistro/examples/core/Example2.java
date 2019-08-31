@@ -1,9 +1,9 @@
-package prosto.examples.core;
-
-import prosto.core.*;
-import prosto.examples.ExUtils;
+package bistro.examples.core;
 
 import java.io.*;
+
+import bistro.examples.ExUtils;
+import bistro.core.*;
 
 public class Example2 {
 

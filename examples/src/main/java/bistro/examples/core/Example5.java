@@ -1,9 +1,9 @@
-package prosto.examples.core;
+package bistro.examples.core;
 
 import java.io.IOException;
 
-import prosto.core.*;
-import prosto.examples.ExUtils;
+import bistro.examples.ExUtils;
+import bistro.core.*;
 
 public class Example5 {
 

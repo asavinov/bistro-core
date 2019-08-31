@@ -1,11 +1,12 @@
-package prosto.examples.core;
+package bistro.examples.core;
 
 import java.io.IOException;
 import java.time.Duration;
 import java.time.Instant;
 
-import prosto.core.*;
-import prosto.examples.ExUtils;
+import bistro.examples.ExUtils;
+
+import bistro.core.*;
 
 public class Example7 {
 

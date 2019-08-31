@@ -3,7 +3,7 @@
 
 # How to build
 
-From the project folder (`prosto/core`) execute the following commands to clean, build and publish the artifact:
+From the project folder (`bistro/core`) execute the following commands to clean, build and publish the artifact:
 
 ```console
 $ gradlew clean
@@ -19,7 +19,7 @@ In order to include this artifact into your project add the following lines to d
 
 ```groovy
 dependencies {
-    compile("prosto:prosto-core:0.1.0")
+    compile("bistro:bistro-core:0.1.0")
 
     // Other dependencies
 }
@@ -27,4 +27,4 @@ dependencies {
 
 # License
 
-See LICENSE file in the project directory: https://github.com/prostodata/prosto/blob/master/LICENSE
+See LICENSE file in the project directory: https://github.com/asavinov/bistro-core/blob/master/LICENSE

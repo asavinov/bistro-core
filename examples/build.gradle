@@ -18,10 +18,10 @@ apply plugin: 'java'
 apply plugin: 'maven-publish'
 apply plugin: 'signing'
 
-description 'Example of using Prosto Core'
+description 'Example of using Bistro Core'
 
-group = 'prosto'
-archivesBaseName = 'prosto-examples'
+group = 'bistro'
+archivesBaseName = 'bistro-examples'
 version = '0.1.0-SNAPSHOT'
 
 sourceCompatibility = 1.8
@@ -35,7 +35,7 @@ repositories {
 
 dependencies {
     testCompile("junit:junit:4.12")
-    compile("prosto:prosto-core:0.1.0-SNAPSHOT")
+    compile("bistro:bistro-core:0.1.0-SNAPSHOT")
 }
 
 configurations.all {
@@ -51,7 +51,7 @@ test {
 //
 
 jar {
-    baseName = 'prosto-examples'
+    baseName = 'bistro-examples'
     version =  '0.1.0-SNAPSHOT'
 
     from {
@@ -100,8 +100,8 @@ publishing {
             from components.java
 
             // Set the base name of the artifacts
-            //groupId 'prosto'
-            artifactId 'prosto-examples'
+            //groupId 'bistro'
+            artifactId 'bistro-examples'
             //version '0.1.0-SNAPSHOT'
 
             // Add POM fields required by Sonatype OSS
@@ -181,34 +181,34 @@ def customizePom(pom, gradleProject) {
         root.children().last() + {
             resolveStrategy = Closure.DELEGATE_FIRST
 
-            name 'Prosto Examples'
+            name 'Bistro Examples'
             description gradleProject.description
-            url 'https://github.com/prostodata/prosto'
+            url 'https://github.com/asavinov/bistro-core'
             organization {
-                name 'Prosto Data'
-                url 'https://github.com/prostodata'
+                name 'Bistro Data'
+                url 'https://github.com/asavinov'
             }
             issueManagement {
                 system 'GitHub'
-                url 'https://github.com/prostodata/prosto/issues'
+                url 'https://github.com/asavinov/bistro-core/issues'
             }
             scm {
-                url 'https://github.com/prostodata/prosto'
-                connection 'scm:git:git://github.com/prostodata/prosto.git'
-                developerConnection 'scm:git:ssh:git@github.com/prostodata/prosto.git'
+                url 'https://github.com/asavinov/bistro-core'
+                connection 'scm:git:git://github.com/asavinov/bistro-core.git'
+                developerConnection 'scm:git:ssh:git@github.com/asavinov/bistro-core.git'
             }
             licenses {
                 license {
                     name 'MIT License'
-                    url 'https://github.com/prostodata/prosto/blob/master/LICENSE'
+                    url 'https://github.com/asavinov/bistro-core/blob/master/LICENSE'
                     distribution 'repo'
                 }
             }
             developers {
                 developer {
-                    id 'prostodata'
-                    name 'Prosto Data'
-                    email 'prostodata@github.com'
+                    id 'Bistro Core'
+                    name 'Bistro Core'
+                    email 'bistro-core@github.com'
                 }
             }
         }

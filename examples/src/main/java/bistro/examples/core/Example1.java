@@ -1,6 +1,6 @@
-package prosto.examples.core;
+package bistro.examples.core;
 
-import prosto.core.*;
+import bistro.core.*;
 
 public class Example1 {
 
