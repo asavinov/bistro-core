@@ -19,8 +19,8 @@ apply plugin: 'signing'
 
 description 'General-purpose data analysis engine radically changing the way batch and stream data is processed'
 
-group = 'prosto'
-archivesBaseName = 'prosto-core'
+group = 'bistro'
+archivesBaseName = 'bistro-core'
 version = '0.1.0-SNAPSHOT'
 
 sourceCompatibility = 1.8
@@ -55,7 +55,7 @@ test {
 //
 
 jar {
-    baseName = 'prosto-core'
+    baseName = 'bistro-core'
     version =  '0.1.0-SNAPSHOT'
 }
 
@@ -100,8 +100,8 @@ publishing {
             from components.java
 
             // Set the base name of the artifacts
-            //groupId 'prosto'
-            artifactId 'prosto-core'
+            //groupId 'bistro'
+            artifactId 'bistro-core'
             //version '0.1.0-SNAPSHOT'
 
             // Add POM fields required by Sonatype OSS
@@ -181,34 +181,34 @@ def customizePom(pom, gradleProject) {
         root.children().last() + {
             resolveStrategy = Closure.DELEGATE_FIRST
 
-            name 'Prosto Core'
+            name 'Bistro Core'
             description gradleProject.description
-            url 'https://github.com/prostodata/prosto'
+            url 'https://github.com/asavinov/bistro-core'
             organization {
-                name 'Prosto Data'
-                url 'https://github.com/prostodata'
+                name 'Bistro Core'
+                url 'https://github.com/asavinov'
             }
             issueManagement {
                 system 'GitHub'
-                url 'https://github.com/prostodata/prosto/issues'
+                url 'https://github.com/asavinov/bistro-core/issues'
             }
             scm {
-                url 'https://github.com/prostodata/prosto'
-                connection 'scm:git:git://github.com/prostodata/prosto.git'
-                developerConnection 'scm:git:ssh:git@github.com/prostodata/prosto.git'
+                url 'https://github.com/asavinov/bistro-core'
+                connection 'scm:git:git://github.com/asavinov/bistro-core.git'
+                bistro developerConnection 'scm:git:ssh:git@github.com/asavinov/bistro-core.git'
             }
             licenses {
                 license {
                     name 'MIT License'
-                    url 'https://github.com/prostodata/prosto/blob/master/LICENSE'
+                    url 'https://github.com/asavinov/bistro-core/blob/master/LICENSE'
                     distribution 'repo'
                 }
             }
             developers {
                 developer {
-                    id 'prostodata'
-                    name 'Prosto Data'
-                    email 'prostodata@github.org'
+                    id 'Bistro Core'
+                    name 'Bistro Core'
+                    email 'bistro-core@github.org'
                 }
             }
         }
